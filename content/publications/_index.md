@@ -6,4 +6,5 @@ cascade:
   showSummary: true
   showWordCount: false
   showReadingTime: false
+  # categories: ["Paper"]
 ---

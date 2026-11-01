@@ -1,8 +1,8 @@
 ---
 title: "No Hyperscaler? No Problem. Your Students also Break (and Fix) Networks" 
 summary: "HotNets 2026: Twenty-Fifth ACM Workshop on Hot Topics in Networks"
-categories: ["Publications","Blog"]
-tags: ["publication", "trace mining", "debugging traces", "network troubleshooting", "network misconfiguration", "root-cause analysis", "network management education", "agentic network operations"]
+categories: ["Publications"]
+tags: ["trace mining", "debugging traces", "network troubleshooting", "root-cause analysis", "network management",  "education", "agentic network operations"]
 date: 2026-11-01
 publishDate: 2026-11-01
 draft: false

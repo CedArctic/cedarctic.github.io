@@ -3,8 +3,12 @@ I am a PhD student with the [**NetSyn**](https://netsyn.princeton.edu/) lab at *
 <!--## <span class="text-left w-full block">Selected Publications</span>-->
 <!--{{< article link="/publications/no-hyperscaler/" >}}
 {{< article link="/publications/eth-routing-attacks/" >}}-->
-{{< list section="publications" limit="2">}}
+
+<!--{{< list section="publications" limit="2">}}
 [View all publications →](/publications/)
+
+{{< list section="Post" limit="2">}}
+[View all blog posts→](/posts/)-->
 
 <!--## <span class="text-left w-full block">News</span>
 {{< timeline >}}

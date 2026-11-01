@@ -1,0 +1,99 @@
+<div class="my-8 w-full max-w-xl rounded-2xl border border-neutral-200/80 bg-neutral-50/50 p-6 shadow-sm backdrop-blur transition-all duration-200 dark:border-neutral-800 dark:bg-neutral-900/50">
+  <!-- Header Text -->
+  <div class="mb-4">
+    <h3 class="text-lg font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
+      {{ with .Get "title" }}{{ . }}{{ else }}Stay updated{{ end }}
+    </h3>
+    <p class="mt-1 text-sm text-neutral-600 dark:text-neutral-400">
+      {{ with .Get "description" }}{{ . }}{{ else }}Get occasional notes on new articles and projects. No spam, ever.{{ end }}
+    </p>
+  </div>
+
+  <!-- Form -->
+  <form id="newsletter-form-{{ .Ordinal }}" class="space-y-3">
+    <!-- Honeypot -->
+    <input type="checkbox" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
+
+    <div class="relative flex flex-col gap-2 sm:flex-row sm:items-center">
+      <!-- Input Wrapper -->
+      <div class="relative w-full">
+        <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-neutral-400 dark:text-neutral-500">
+          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.206" />
+          </svg>
+        </div>
+        <input
+          type="email"
+          name="email"
+          id="email-input-{{ .Ordinal }}"
+          required
+          placeholder="you@domain.com"
+          class="block w-full rounded-xl border border-neutral-300 bg-white py-2.5 pl-10 pr-4 text-sm text-neutral-900 placeholder-neutral-400 transition-all focus:border-primary-500 focus:outline-none focus:ring-4 focus:ring-primary-500/10 dark:border-neutral-700/80 dark:bg-neutral-800 dark:text-neutral-100 dark:placeholder-neutral-500 dark:focus:border-primary-400 dark:focus:ring-primary-400/20"
+        />
+      </div>
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        id="submit-btn-{{ .Ordinal }}"
+        class="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-primary-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-all duration-150 hover:bg-primary-700 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60 dark:bg-primary-500 dark:hover:bg-primary-600"
+      >
+        <span id="btn-text-{{ .Ordinal }}">Subscribe</span>
+        <svg id="btn-spinner-{{ .Ordinal }}" class="hidden h-4 w-4 animate-spin text-white" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Status Message -->
+    <div id="status-box-{{ .Ordinal }}" class="hidden rounded-lg p-2.5 text-xs font-medium transition-all"></div>
+  </form>
+</div>
+
+<script>
+(() => {
+  const form = document.getElementById("newsletter-form-{{ .Ordinal }}");
+  const input = document.getElementById("email-input-{{ .Ordinal }}");
+  const btn = document.getElementById("submit-btn-{{ .Ordinal }}");
+  const btnText = document.getElementById("btn-text-{{ .Ordinal }}");
+  const spinner = document.getElementById("btn-spinner-{{ .Ordinal }}");
+  const status = document.getElementById("status-box-{{ .Ordinal }}");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    // Loading state
+    btn.disabled = true;
+    btnText.textContent = "Joining...";
+    spinner.classList.remove("hidden");
+    status.classList.add("hidden");
+
+    try {
+      const res = await fetch("https://submit-form.com/{{ .Site.Params.formspark_form_id }}", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({ email: input.value })
+      });
+
+      if (res.ok) {
+        form.reset();
+        btnText.textContent = "Joined";
+        status.textContent = "Thank you! You're on the list.";
+        status.className = "rounded-lg p-2.5 text-xs font-medium bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/50";
+        status.classList.remove("hidden");
+      } else {
+        throw new Error();
+      }
+    } catch {
+      btnText.textContent = "Retry";
+      status.textContent = "Unable to subscribe right now. Please try again.";
+      status.className = "rounded-lg p-2.5 text-xs font-medium bg-rose-50 text-rose-700 dark:bg-rose-950/40 dark:text-rose-300 border border-rose-200 dark:border-rose-800/50";
+      status.classList.remove("hidden");
+    } finally {
+      btn.disabled = false;
+      spinner.classList.add("hidden");
+    }
+  });
+})();
+</script>

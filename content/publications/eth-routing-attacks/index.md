@@ -1,8 +1,8 @@
 ---
 title: "Routing Attacks in Ethereum PoS: A Systematic Exploration" 
 summary: "Financial Cryptography and Data Security 2026"
-categories: ["Publications","Blog"]
-tags: ["publication","ethereum","routing","attacks","bgp","hijack"]
+categories: ["Publications"]
+tags: ["ethereum","routing","attacks","bgp","hijack"]
 date: 2026-03-02
 publishDate: 2026-02-26
 draft: false
