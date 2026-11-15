@@ -1,17 +1,15 @@
 ---
 title: "Interactive Artifact: No Hyperscaler? No Problem. Your Students also Break (and Fix) Networks"
 summary: "Experiment with our method for mining knowledge from operator traces"
-# categories: ["Post","Blog",]
 tags: ["artifact"]
-#externalUrl: ""
-#showSummary: true
+externalUrl: "https://hyperscaler.netsyn.net/"
 date: 2026-11-02
 ---
 
-{{< formspark title="Artifact Availability Notification Sign-Up" description="Sign up to get notified when our artifact launches and experiment with our method yourself!" >}}
+Redirecting to the [interactive artifact](https://hyperscaler.netsyn.net/)...
 
 ## Artifact Access
-We are currently hard at work preparing our artifact for you to try. Sign up above to get notified when we launch it!
+You can access the interactive artifact directly at [hyperscaler.netsyn.net](https://hyperscaler.netsyn.net/).
 
 ## Paper TL;DR
 - Our method automatically mines knowledge from network engineer terminal traces
@@ -20,3 +18,5 @@ We are currently hard at work preparing our artifact for you to try. Sign up abo
 
 ## Learn more
 Want to learn more about how we collect data and mine knowledge from student networking courses? Check out [our HotNets'26 paper]({{< relref "publications/no-hyperscaler/index.md" >}}).
+
+Read more about [our lab's neurosymbolic approach to networking]().
