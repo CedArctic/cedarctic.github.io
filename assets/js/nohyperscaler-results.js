@@ -38,7 +38,10 @@
     // Draw at the figure's real width (no downscaling, so labels stay readable on phones)
     figure.querySelector('svg')?.remove();
     figure.querySelector('.nh-tooltip')?.remove();
-    const W = Math.max(280, Math.min(560, figure.clientWidth - 32)), H = 250, left = 40, right = 6, top = 18, bottom = 52;
+    const W = Math.max(280, Math.min(560, figure.clientWidth - 32));
+    // Phones: wider bars, fault names on two lines, a narrower y axis
+    const narrow = W < 420;
+    const H = narrow ? 262 : 250, left = narrow ? 34 : 40, right = 6, top = 18, bottom = narrow ? 64 : 52;
     const plotW = W - left - right, plotH = H - top - bottom;
     const y = (v) => top + plotH - (v / metric.max) * plotH;
 
@@ -52,9 +55,11 @@
       label.textContent = metric.fmt(t);
     }
 
-    const groupW = plotW / RESULTS.length, barW = Math.min(36, groupW / 2 - 6);
-    const gap = Math.max(2, 35 - barW); // keep the two value labels of a group apart
-    const valueSize = barW < 34 ? 10 : 11;
+    // The two bars of a fault sit side by side, 3px apart; the rest of the fault's slot separates it from the next
+    // fault. Bars stay at least as wide as their value label ("100%": ~24px at 10px, ~27px at 11px).
+    const groupW = plotW / RESULTS.length, gap = 3;
+    const barW = narrow ? groupW * 0.36 : Math.min(30, groupW * 0.3);
+    const valueSize = narrow ? 10 : 11;
     const tooltip = document.createElement('div');
     tooltip.className = 'nh-tooltip';
     tooltip.hidden = true;
@@ -92,7 +97,14 @@
       });
       const group = el('g', { class: 'group' }, svg);
       const fault = el('text', { x: cx, y: H - bottom + 16, 'text-anchor': 'middle' }, group);
-      fault.textContent = row.fault;
+      if (narrow) {
+        // "L2 Subnetting" -> "L2" / "Subnetting"
+        const [first, ...rest] = row.fault.split(' ');
+        el('tspan', { x: cx }, fault).textContent = first;
+        el('tspan', { x: cx, dy: 13 }, fault).textContent = rest.join(' ');
+      } else {
+        fault.textContent = row.fault;
+      }
     });
 
     // Model labels span their two faults
@@ -101,8 +113,9 @@
       const idx = RESULTS.map((r, i) => (r.model === m ? i : -1)).filter((i) => i >= 0);
       const x1 = left + groupW * idx[0] + 8, x2 = left + groupW * (idx[idx.length - 1] + 1) - 8;
       const group = el('g', { class: 'group' }, svg);
-      el('line', { class: 'divider', x1, x2, y1: H - bottom + 24, y2: H - bottom + 24 }, group);
-      const t = el('text', { class: 'model', x: (x1 + x2) / 2, y: H - bottom + 40, 'text-anchor': 'middle' }, group);
+      const lineY = H - bottom + (narrow ? 37 : 24);
+      el('line', { class: 'divider', x1, x2, y1: lineY, y2: lineY }, group);
+      const t = el('text', { class: 'model', x: (x1 + x2) / 2, y: lineY + 16, 'text-anchor': 'middle' }, group);
       t.textContent = m;
     });
 
