@@ -3,3 +3,14 @@
   <script>window.location.replace("{{ . }}");</script>
   <link rel="canonical" href="{{ . }}">
 {{ end }}
+{{/* Zen mode on by default: `zenModeDefault: true` in front matter (needs `showZenMode: true` for the button) */}}
+{{ if and .IsPage (.Params.zenModeDefault | default site.Params.article.zenModeDefault) }}
+  <script>
+    window.addEventListener("DOMContentLoaded", () => {
+      const btn = document.getElementById("zen-mode-button");
+      if (btn && !document.body.classList.contains("zen-mode-enable")) {
+        _toggleZenMode(btn, { scrollToHeader: false });
+      }
+    });
+  </script>
+{{ end }}

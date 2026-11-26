@@ -1,0 +1,71 @@
+/* Site additions, loaded by Blowfish after its own CSS. */
+
+/* ---- No Hyperscaler paper page (content/publications/no-hyperscaler, shortcode nohyperscaler-results) ----
+   Ported from the artifact's landing page; colours follow the theme's light/dark mode (html.dark). */
+:root {
+  --nh-card: rgb(var(--color-neutral-100));
+  --nh-line: rgb(var(--color-neutral-300));
+  --nh-text: rgb(var(--color-neutral-900));
+  --nh-text-2: rgb(var(--color-neutral-700));
+  --nh-text-3: rgb(var(--color-neutral-500));
+  --nh-accent: rgb(var(--color-primary-700));
+  --nh-grid: rgba(0, 0, 0, 0.1);
+  --nh-tooltip: rgb(var(--color-neutral));
+  /* chart series: the landing page's colours, darkened for contrast on a light surface */
+  --nh-without: #c45e14;
+  --nh-with: #1d8a69;
+}
+html.dark {
+  --nh-card: rgb(var(--color-neutral-800));
+  --nh-line: rgb(var(--color-neutral-700));
+  --nh-text: rgb(var(--color-neutral-100));
+  --nh-text-2: rgb(var(--color-neutral-300));
+  --nh-text-3: rgb(var(--color-neutral-400));
+  --nh-accent: rgb(var(--color-primary-300));
+  --nh-grid: rgba(255, 255, 255, 0.08);
+  --nh-tooltip: rgb(var(--color-neutral-900));
+  --nh-without: #d9691a;
+  --nh-with: #25a37c;
+}
+
+.nh-meta { margin: 0.25rem 0; }
+.nh-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 1.25rem 0 0.5rem; }
+
+.nh-cards { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr)); margin-top: 1rem; }
+@media (max-width: 640px) { .nh-cards { grid-template-columns: 1fr; } }
+.nh-card { background: var(--nh-card); border: 1px solid var(--nh-line); border-radius: 0.75rem; padding: 1rem 1.15rem; }
+.nh-card h3 { margin: 0 0 0.4rem !important; font-size: 1.05rem; color: var(--nh-accent); }
+.nh-card p { margin: 0 !important; }
+
+.nh-takeaways { list-style: none; padding: 0 !important; margin: 1.5rem 0 0; }
+.nh-takeaways li { position: relative; padding-left: 1.8rem !important; margin: 0.4rem 0; }
+.nh-takeaways li::before { content: "✓"; position: absolute; left: 0.2rem; color: var(--nh-with); font-weight: 700; }
+
+.nh-chart-legend { display: flex; flex-wrap: wrap; gap: 1.25rem; margin: 1.5rem 0 0.5rem; font-size: 0.9rem; }
+.nh-chart-legend span { display: inline-flex; align-items: center; gap: 0.45rem; }
+.nh-sw { display: inline-block; width: 0.85rem; height: 0.85rem; border-radius: 3px; }
+.nh-sw.without { background: var(--nh-without); }
+.nh-sw.with { background: var(--nh-with); }
+.nh-charts { display: grid; grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); gap: 1rem; }
+.nh-chart { position: relative; margin: 0; background: var(--nh-card); border: 1px solid var(--nh-line); border-radius: 0.75rem; padding: 1rem 1rem 0.5rem; }
+.nh-chart figcaption { margin: 0 0 0.5rem; font-size: 0.95rem; font-weight: 600; color: var(--nh-text); }
+.nh-chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+.nh-chart .grid line { stroke: var(--nh-grid); }
+.nh-chart .divider { stroke: var(--nh-line); }
+.nh-chart .axis text, .nh-chart .group text { fill: var(--nh-text-3); font-size: 11px; }
+.nh-chart .group .model { fill: var(--nh-text-2); font-weight: 600; }
+.nh-chart .value { fill: var(--nh-text); font-weight: 600; }
+.nh-chart .bar { transition: opacity 0.12s; }
+.nh-chart .bar.without { fill: var(--nh-without); }
+.nh-chart .bar.with { fill: var(--nh-with); }
+.nh-chart .hit { fill: transparent; }
+.nh-chart:hover .bar { opacity: 0.55; }
+.nh-chart .mark:hover .bar { opacity: 1; }
+.nh-tooltip {
+  position: absolute; pointer-events: none; z-index: 2; padding: 0.4rem 0.6rem; border-radius: 8px;
+  background: var(--nh-tooltip); border: 1px solid var(--nh-line); color: var(--nh-text); font-size: 0.8rem;
+  line-height: 1.4; white-space: nowrap; transform: translate(-50%, calc(-100% - 8px));
+}
+.nh-tooltip[hidden] { display: none; }
+.nh-tooltip-head { color: var(--nh-text-3); }
+.nh-note { font-size: 0.85rem; color: var(--nh-text-3); }

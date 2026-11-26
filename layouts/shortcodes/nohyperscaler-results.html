@@ -1,0 +1,17 @@
+{{/* Results charts for the No Hyperscaler paper page (paper Table 5); drawn by assets/js/nohyperscaler-results.js,
+     styled in assets/css/custom.css (.nh-*). Usage: {{< nohyperscaler-results >}} */}}
+<div class="nh-chart-legend" aria-hidden="true">
+  <span><i class="nh-sw without"></i>Without runbooks</span>
+  <span><i class="nh-sw with"></i>With runbooks</span>
+</div>
+<div class="nh-charts">
+  <figure class="nh-chart" data-metric="rca">
+    <figcaption>RCA success rate</figcaption>
+  </figure>
+  <figure class="nh-chart" data-metric="tokens">
+    <figcaption>Tokens per run (input + output, mean)</figcaption>
+  </figure>
+</div>
+{{- with resources.Get "js/nohyperscaler-results.js" | minify | fingerprint (site.Params.fingerprintAlgorithm | default "sha512") }}
+<script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" defer></script>
+{{- end }}
